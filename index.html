@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tekstil Atıkları ile Mücadele — Sürdürülebilir Tekstil</title>
+  <meta name="description" content="Tekstil atıklarını azaltmak, geri dönüştürmek ve bilinçli alışveriş yapmak için rehber, projeler ve kaynaklar. Katıl, bağışla, fark yarat." />
+  <!-- Google Font (opsiyonel) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: 255,99,132;
+      --bg2: 63,94,251;
+      --bg3: 34,193,195;
+      --max-width: 1200px;
+      --muted: #9aa3b2;
+      --card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.06);
+      --accent: rgba(255,255,255,0.95);
+    }
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--accent);
+      background:#071026;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+
+    /* NAV */
+    header{
+      position:fixed; inset:0 0 auto 0; z-index:60; display:flex; align-items:center; justify-content:center;
+      pointer-events:none;
+    }
+    nav{
+      width:100%; max-width:var(--max-width); margin:18px; pointer-events:auto;
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+    }
+    .brand{ font-weight:800; letter-spacing:-0.02em; font-size:20px; }
+    .nav-links{ display:flex; gap:12px; align-items:center; }
+    .nav-links a{
+      color:var(--accent); text-decoration:none; padding:10px 12px; border-radius:8px;
+      font-weight:600; opacity:0.95;
+    }
+    .nav-links a:hover{ background: rgba(255,255,255,0.03); }
+
+    /* ROOT */
+    .site-root{ position:relative; min-height:100vh; overflow-x:hidden; }
+
+    /* Gradient + photo hero layers */
+    .hero-layer{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+    .gradient{
+      position:absolute; inset:-30%; background: linear-gradient(120deg,
+        rgba(var(--bg1),0.55),
+        rgba(var(--bg2),0.45),
+        rgba(var(--bg3),0.55));
+      filter: blur(60px) saturate(1.08); transform: scale(1.05);
+      mix-blend-mode: screen; animation: gradMove 18s linear infinite alternate;
+      will-change: transform, filter; z-index:0;
+    }
+    @keyframes gradMove {
+      0% { transform: translate3d(-6%, -6%,0) scale(1.06); }
+      50% { transform: translate3d(6%, 4%,0) scale(1.08); }
+      100% { transform: translate3d(-6%, 6%,0) scale(1.06); }
+    }
+    .photos { position:absolute; inset:0; z-index:0; }
+    .photo {
+      position:absolute; inset:-12%; background-size:cover; background-position:center;
+      filter: contrast(1.04) saturate(1.05) blur(0.9px); mix-blend-mode:multiply; opacity:0;
+      transition: opacity 1s ease, transform 9s ease; will-change: transform, opacity;
+    }
+    .photo.active{ opacity:1; z-index:1; transform: scale(1.02); }
+
+    /* Overlay to improve contrast */
+    .overlay{
+      position:fixed; inset:0; z-index:1;
+      background: linear-gradient(180deg, rgba(4,8,15,0.08), rgba(4,8,15,0.5));
+      pointer-events:none;
+    }
+
+    /* HERO CONTENT */
+    .hero {
+      position:relative; z-index:10; display:flex; align-items:center; justify-content:center;
+      min-height:80vh; padding:120px 20px 80px;
+    }
+    .container{ width:min(var(--max-width), 94%); margin:0 auto; display:flex; gap:28px; flex-wrap:wrap; align-items:center; }
+    .hero-left{ flex:1 1 420px; min-width:280px; color:var(--accent); }
+    .eyebrow{ display:inline-block; background:var(--glass); padding:6px 10px; border-radius:999px; font-weight:600; font-size:13px; color:var(--accent); margin-bottom:18px; backdrop-filter: blur(6px); border:1px solid rgba(255,255,255,0.04) }
+    h1.hero-title{
+      font-size: clamp(28px, 5.5vw, 54px);
+      line-height:1.02; margin-bottom:12px; font-weight:800; text-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    p.lead{ color:var(--muted); margin-bottom:20px; max-width:64ch; }
+    .cta-row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .btn{
+      display:inline-block; padding:12px 18px; border-radius:999px; text-decoration:none; font-weight:700;
+      background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.08);
+    }
+    .ghost{ background:transparent; border:1px solid rgba(255,255,255,0.08); padding:10px 14px; border-radius:10px; color:var(--accent); font-weight:600; }
+
+    /* hero-right sample cards */
+    .hero-right{ flex:0 1 360px; min-width:240px; display:flex; gap:14px; flex-direction:column; }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
+    }
+    .stat{ display:flex; gap:12px; align-items:center; }
+    .stat .num{ font-weight:800; font-size:22px; }
+    .stat .desc{ color:var(--muted); font-size:13px; }
+
+    /* MAIN CONTENT */
+    main{ position:relative; z-index:10; padding:40px 20px 120px; width:100%; }
+    .grid{ width:min(var(--max-width),94%); margin:0 auto; display:grid; grid-template-columns: 1fr 340px; gap:28px; }
+    .section{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:22px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); }
+    .section h2{ margin-bottom:12px; font-size:20px; }
+    .tips{ display:grid; grid-template-columns: repeat(2,1fr); gap:12px; }
+    .tip{ background:var(--card); padding:12px; border-radius:10px; font-size:14px; color:var(--muted); }
+
+    /* CONTRIBUTION / CTA */
+    .cta-block{ display:flex; flex-direction:column; gap:12px; align-items:flex-start; justify-content:center; padding:18px; }
+
+    /* CONTACT FORM */
+    form.contact{ display:flex; flex-direction:column; gap:10px; }
+    input, textarea{
+      background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); padding:10px 12px; color:var(--accent); border-radius:8px;
+      resize:vertical;
+    }
+    button[type="submit"]{ padding:10px 14px; border-radius:10px; border:0; cursor:pointer; font-weight:700; background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); }
+
+    /* FOOTER */
+    footer{ padding:28px 20px; border-top:1px solid rgba(255,255,255,0.03); color:var(--muted); z-index:10; position:relative; }
+    .footer-inner{ width:min(var(--max-width),94%); margin:0 auto; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+    /* Responsive */
+    @media (max-width:900px){
+      .grid{ grid-template-columns: 1fr; }
+      .hero{ padding-top:100px; }
+      .hero-right{ order:3; }
+    }
+    @media (max-width:520px){
+      .tips{ grid-template-columns:1fr; }
+      .nav-links{ display:none; }
+      nav{ align-items:center; }
+      .container{ flex-direction:column; align-items:flex-start; gap:18px; }
+      .hero-left{ width:100% }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-root" id="siteRoot">
+    <!-- NAV -->
+    <header>
+      <nav role="navigation" aria-label="Ana Menü">
+        <div class="brand">Tekstil Döngüsü</div>
+        <div class="nav-links" aria-hidden="false">
+          <a href="#neden">Neden?</a>
+          <a href="#rehber">Rehber</a>
+          <a href="#proje">Projeler</a>
+          <a href="#iletisim">İletişim</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- HERO LAYERS -->
+    <div class="hero-layer" aria-hidden="true">
+      <div class="gradient"></div>
+      <div class="photos" id="photos">
+        <!-- JS ile foto eklenir -->
+      </div>
+    </div>
+
+    <div class="overlay" aria-hidden="true"></div>
+
+    <!-- HERO -->
+    <section class="hero" role="banner" aria-labelledby="heroTitle">
+      <div class="container">
+        <div class="hero-left">
+          <span class="eyebrow">Sürdürülebilirlik • Geri Dönüşüm</span>
+          <h1 class="hero-title" id="heroTitle">Tekstil Atıklarını Azalt, Yeni Döngüler Yarat</h1>
+          <p class="lead">Her yıl tonlarca kumaş çöpe gidiyor. Küçük adımlar büyük fark yaratır — doğru bilgi, paylaşım ve yerel projelerle tekstil atıklarını azaltabiliriz.</p>
+          <div class="cta-row">
+            <a class="btn" href="#proje">Kampanyaya Katıl</a>
+            <a class="ghost" href="#rehber">Hemen Öğren</a>
+          </div>
+        </div>
+
+        <aside class="hero-right" aria-labelledby="quickStats">
+          <div class="card" id="quickStats">
+            <div class="stat">
+              <div class="num" id="stat1">--</div>
+              <div>
+                <div style="font-weight:700">Tekstil Atığı (örnek)</div>
+                <div class="desc">Yıllık ton cinsinden (örnek değer)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="font-size:14px; color:var(--muted); margin-bottom:8px;">Hızlı Başlangıç</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div class="tip" style="font-weight:700;color:var(--accent)">Bağışla</div>
+              <div class="tip">Kullanılmayan giysileri yetkili kuruluşlara ver.</div>
+              <div class="tip" style="font-weight:700;color:var(--accent)">Yeniden Kullan</div>
+              <div class="tip">Kumaşı tamir et veya upcycle projelerine katıl.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- MAIN -->
+    <main>
+      <div class="grid">
+        <section class="section" id="neden" aria-labelledby="nedenBaşlık">
+          <h2 id="nedenBaşlık">Neden Tekstil Atıkları Önemli?</h2>
+          <p style="color:var(--muted); margin-bottom:12px;">
+            Tekstil üretimi su, enerji ve kimyasal kullanımına bağlı yoğun bir sektördür. Giysilerin erken çöpe gitmesi; doğal kaynakların boşa harcanması, atık depolama problemleri ve çevresel kirlilik anlamına gelir.
+          </p>
+          <p style="color:var(--muted)"><strong>Kısa etkiler:</strong> Alışveriş davranışları, kalite seçimi ve onarım kültürü doğrudan atık miktarını etkiler. Küçük değişikliklerle atıkları azaltmak mümkündür.</p>
+
+          <h3 style="margin-top:18px;">Gerçekleştirilebilecek adımlar</h3>
+          <ul style="margin-top:8px; color:var(--muted);">
+            <li>Giysileri tamir et ve bakımını iyi yap.</li>
+            <li>Çoklu kullanım ve kaliteli ürün seç.</li>
+            <li>Yerel geri dönüşüm merkezlerini destekle.</li>
+            <li>Atıkları ayrıştır ve geri dönüştürülmesi için teslim et.</li>
+          </ul>
+        </section>
+
+        <aside class="section" id="proje" aria-labelledby="projeBaşlık">
+          <h2 id="projeBaşlık">Projeler & Katkı</h2>
+          <div class="cta-block">
+            <div style="font-weight:700">Gönüllü ol</div>
+            <div style="color:var(--muted)">Yerel topluluk temizlik etkinlikleri ve tekstil toplama günlerine katıl.</div>
+            <a class="btn" href="#iletisim" style="margin-top:8px">İletişime Geç</a>
+          </div>
+
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03); margin:12px 0">
+
+          <div>
+            <div style="font-weight:700; margin-bottom:8px;">Bağış Yap</div>
+            <div style="color:var(--muted)">Malzeme, atık ayırma ekipmanı veya maddi bağışlarla projelere destek olabilirsiniz.</div>
+          </div>
+        </aside>
+
+        <!-- Rehber bölümü (tavsiye ve uygulamalar) -->
+        <section class="section" style="grid-column:1/-1" id="rehber" aria-labelledby="rehberBaşlık">
+          <h2 id="rehberBaşlık">Uygulanabilir Rehber: Azalt • Yeniden Kullan • Geri Dönüştür</h2>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:12px; margin-top:12px;">
+            <div class="tip">
+              <strong>Alışverişte bilinçli ol</strong><br><small style="color:var(--muted)">Uzun ömürlü, tamir edilebilir ve doğal malzemeleri tercih et.</small>
+            </div>
+            <div class="tip">
+              <strong>Onar ve tamir et</strong><br><small style="color:var(--muted)">Dikiş, düğme değişimi ve yamalarla kullanım ömrünü uzat.</small>
+            </div>
+            <div class="tip">
+              <strong>Upcycle</strong><br><small style="color:var(--muted)">Eski giysileri yeni ürünlere dönüştür (çanta, ev tekstili).</small>
+            </div>
+            <div class="tip">
+              <strong>Geri dönüştürme</strong><br><small style="color:var(--muted)">Ayrıştır ve yerel tekstil geri dönüşüm noktalarına teslim et.</small>
+            </div>
+          </div>
+        </section>
+
+        <!-- Iletisim / Form -->
+        <section class="section" id="iletisim" aria-labelledby="iletisimBaşlık">
+          <h2 id="iletisimBaşlık">Bize Ulaş</h2>
+          <p style="color:var(--muted)">Proje ortaklığı, bağış veya gönüllülük hakkında mesaj at.</p>
+          <form class="contact" id="contactForm" novalidate>
+            <label>
+              <span style="display:block;margin-bottom:6px;font-weight:700">İsim</span>
+              <input type="text" id="name" name="name" required placeholder="Adınız Soyadınız">
+            </label>
+            <label>
+              <span style="display:block;margin-bottom:6px;font-weight:700">E-posta</span>
+              <input type="email" id="email" name="email" required placeholder="mail@ornek.com">
+            </label>
+            <label>
+              <span style="display:block;margin-bottom:6px;font-weight:700">Mesaj</span>
+              <textarea id="message" name="message" rows="4" required placeholder="Mesajınız..."></textarea>
+            </label>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button type="submit">Gönder</button>
+              <div id="formStatus" style="color:var(--muted); font-size:13px;"></div>
+            </div>
+          </form>
+        </section>
+
+      </div><!-- .grid -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <div>© <strong>Tekstil Döngüsü</strong> — Tüm hakları saklıdır.</div>
+        <div style="color:var(--muted)">Hazırlayan: Sürdürülebilirlik Girişimi</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /* ---------------------------
+       Basit JS: foto slider, stat sayacı ve form doğrulama
+       --------------------------- */
+
+    // Fotoğraf slider: kendi URL'lerini buraya ekleyebilirsin
+    const PHOTOS = [
+      "https://images.unsplash.com/photo-1520975915033-7f9b3303c3c8?w=1600&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503342217505-b0a15d4baf36?w=1600&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=1600&q=80&auto=format&fit=crop"
+    ];
+
+    const photosContainer = document.getElementById('photos');
+    let photoIndex = 0;
+    let photoTimer = null;
+    const PHOTO_INTERVAL = 7000;
+
+    function buildPhotos(){
+      PHOTOS.forEach((src, i) => {
+        const d = document.createElement('div');
+        d.className = 'photo';
+        d.style.backgroundImage = `url("${src}")`;
+        // hafif rasgele pozisyon
+        const tx = (Math.random()*10 - 5) + '%';
+        const ty = (Math.random()*8 - 4) + '%';
+        d.style.transform = `translate3d(${tx}, ${ty}, 0) scale(1.04)`;
+        photosContainer.appendChild(d);
+      });
+    }
+    function showPhoto(i){
+      const nodes = photosContainer.querySelectorAll('.photo');
+      nodes.forEach((n, idx) => {
+        n.classList.toggle('active', idx === i);
+        // küçük hareket ver
+        const rx = (Math.random()*3 - 1.5) + '%';
+        const ry = (Math.random()*3 - 1.5) + '%';
+        n.style.transform = `translate3d(${rx}, ${ry}, 0) scale(${idx===i?1.02:1.04})`;
+      });
+    }
+    function startPhotos(){
+      if(photoTimer) clearInterval(photoTimer);
+      photoTimer = setInterval(()=> {
+        photoIndex = (photoIndex + 1) % PHOTOS.length;
+        showPhoto(photoIndex);
+      }, PHOTO_INTERVAL);
+    }
+
+    // Basit "istatistik" — burada örnek (placeholder) değerler var. İstersen gerçek verilerle değiştir.
+    document.getElementById('stat1').textContent = "120,000+";
+
+    // Form işlemleri (frontend only)
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+      if(!name || !email || !message){
+        status.textContent = 'Lütfen tüm alanları doldurun.';
+        return;
+      }
+      // Basit email regex
+      const emReg = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if(!emReg.test(email)){
+        status.textContent = 'Geçerli bir e-posta girin.';
+        return;
+      }
+      // Burada gerçek backend yoksa sadece simüle et
+      status.textContent = 'Gönderiliyor...';
+      setTimeout(()=> {
+        status.textContent = 'Mesajınız alındı — teşekkürler!';
+        form.reset();
+      }, 900);
+    });
+
+    // Parallax fare hareketi: performans dostu rAF ile
+    (function parallax(){
+      const root = document.getElementById('siteRoot');
+      let raf = null;
+      root.addEventListener('pointermove', (e) => {
+        const w = window.innerWidth, h = window.innerHeight;
+        const nx = (e.clientX / w - 0.5) * 2; // -1..1
+        const ny = (e.clientY / h - 0.5) * 2;
+        if(raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(()=> {
+          const grad = document.querySelector('.gradient');
+          grad.style.transform = `translate3d(${nx*3}%, ${ny*2}%, 0) scale(1.06)`;
+          const nodes = document.querySelectorAll('.photo');
+          nodes.forEach((n, idx) => {
+            const depth = (idx + 1) / nodes.length;
+            const tx = (nx * 6 * depth).toFixed(2) + '%';
+            const ty = (ny * 4 * depth).toFixed(2) + '%';
+            n.style.transform = `translate3d(${tx}, ${ty}, 0) scale(${1.02 + depth*0.01})`;
+          });
+        });
+      });
+    })();
+
+    // Başlat
+    (function init(){
+      buildPhotos();
+      showPhoto(photoIndex);
+      startPhotos();
+    })();
+
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda</title>
+    <style>
+        /* CSS Kodları */
+        .about-us {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .circular-image {
+            flex: 0 0 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .circular-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .text-content {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .text-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .text-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        /* Responsive tasarım */
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .circular-image {
+                flex: 0 0 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML Kodları -->
+    <section class="about-us">
+        <div class="about-container">
+            <div class="circular-image">
+                <img src="https://via.placeholder.com/300" alt="Hakkımızda resmi">
+            </div>
+            <div class="text-content">
+                <h2>Hakkımızda</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özellikler Bölümü</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="features">
+        <h2>Başlık</h2>
+        <p>Paragraf metni buraya gelecek. Bu bölüm hizmetlerimiz, ürünlerimiz veya özelliklerimiz hakkında açıklama içerebilir.</p>
+        
+        <div class="grid-container">
+            <div class="column">
+                <img src="https://via.placeholder.com/300x200" alt="Özellik 1">
+            </div>
+            <div class="column">
+                <img src="https://via.placeholder.com/300x200" alt="Özellik 2">
+            </div>
+            <div class="column">
+                <img src="https://via.placeholder.com/300x200" alt="Özellik 3">
+            </div>
+        </div>
+    </section>
+</body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dönüşümlü İçerik Blokları</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- İlk Bölüm - Resim Sol, Metin Sağ -->
+    <section class="content-block">
+        <div class="image-container">
+            <img src="https://via.placeholder.com/500x300" alt="İlk bölüm resmi">
+        </div>
+        <div class="text-container">
+            <h2>Birinci Başlık</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.</p>
+        </div>
+    </section>
+
+    <!-- İkinci Bölüm - Metin Sol, Resim Sağ -->
+    <section class="content-block reversed">
+        <div class="image-container">
+            <img src="https://via.placeholder.com/500x300" alt="İkinci bölüm resmi">
+        </div>
+        <div class="text-container">
+            <h2>İkinci Başlık</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.</p>
+        </div>
+    </section>
+</body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takım Bölümü</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="team-section">
+        <h2>Takımımız</h2>
+        <h3>Deneyimli ekibimizle hizmetinizdeyiz</h3>
+        
+        <div class="profile-grid">
+            <div class="profile-item">
+                <img src="https://via.placeholder.com/200x200" alt="Takım Üyesi 1">
+            </div>
+            <div class="profile-item">
+                <img src="https://via.placeholder.com/200x200" alt="Takım Üyesi 2">
+            </div>
+            <div class="profile-item">
+                <img src="https://via.placeholder.com/200x200" alt="Takım Üyesi 3">
+            </div>
+            <div class="profile-item">
+                <img src="https://via.placeholder.com/200x200" alt="Takım Üyesi 4">
+            </div>
+            <div class="profile-item">
+                <img src="https://via.placeholder.com/200x200" alt="Takım Üyesi 5">
+            </div>
+            <div class="profile-item">
+                <img src="https://via.placeholder.com/200x200" alt="Takım Üyesi 6">
+            </div>
+        </div>
+    </section>
+</body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiyatlandırma Bölümü</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="pricing-section">
+        <h2>Fiyatlandırma Planları</h2>
+        <h3>İhtiyaçlarınıza uygun esnek çözümler</h3>
+        
+        <div class="card-container">
+            <div class="card">
+                <h2>Başlangıç</h2>
+                <ul>
+                    <li>10 GB Depolama</li>
+                    <li>5 E-posta Hesabı</li>
+                    <li>Temlak Destek</li>
+                    <li>Ücretsiz Domain</li>
+                    <li>SSL Sertifikası</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>Profesyonel</h2>
+                <ul>
+                    <li>50 GB Depolama</li>
+                    <li>20 E-posta Hesabı</li>
+                    <li>7/24 Destek</li>
+                    <li>Ücretsiz Domain</li>
+                    <li>SEO Optimizasyon</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>Kurumsal</h2>
+                <ul>
+                    <li>Sınırsız Depolama</li>
+                    <li>Sınırsız E-posta</li>
+                    <li>Öncelikli Destek</li>
+                    <li>Gelişmiş Güvenlik</li>
+                    <li>Özel Sunucu</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sıkça Sorulan Sorular</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="faq-section">
+        <h2>Sıkça Sorulan Sorular</h2>
+        <h3>Merak ettiğiniz soruların cevaplarını burada bulabilirsiniz</h3>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <h3>Ürün iade politikası nedir?</h3>
+                <p>Satın aldığınız ürünleri 30 gün içinde orijinal ambalajı ve faturasıyla birlikte iade edebilirsiniz. İade işlemleri 5-7 iş günü içinde tamamlanmaktadır.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Kargo süresi ne kadar?</h3>
+                <p>Siparişleriniz 1-3 iş günü içinde kargoya verilir. Standart kargo süresi 3-5 iş günüdür. Express kargo seçeneği ile 1-2 iş gününde teslimat yapılabilmektedir.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Garanti kapsamı nedir?</h3>
+                <p>Tüm ürünlerimiz 2 yıl garantilidir. Garanti kapsamında üretim kaynaklı arızalar ücretsiz olarak tamir edilmekte veya ürün değişimi yapılmaktadır.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Nasıl ödeme yapabilirim?</h3>
+                <p>Kredi kartı, banka kartı, havale/EFT ve kapıda ödeme seçenekleri mevcuttur. Tüm ödeme işlemleri 256 bit SSL sertifikası ile güvence altındadır.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Teknik destek hizmetiniz var mı?</h3>
+                <p>Evet, 7/24 teknik destek hattımızdan ve canlı destek sistemimizden müşterilerimize hizmet vermekteyiz. Ayrıca online dokümantasyon merkezimiz de bulunmaktadır.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Kurumsal indirim uyguluyor musunuz?</h3>
+                <p>Evet, 10 ve üzeri siparişlerde kurumsal indirim uygulamaktayız. Detaylı bilgi ve teklif almak için kurumsal satış departmanımızla iletişime geçebilirsiniz.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html><!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - Şirket Adı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- İletişim Bölümü -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Bizimle İletişime Geçin</h2>
+                <p>Size nasıl yardımcı olabileceğimizi konuşalım. Profesyonel ekibimiz her türlü sorunuzu yanıtlamak için burada.</p>
+                
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <h3>Adres</h3>
+                        <p>1234 Şirket Caddesi<br>İş Merkezi No:56<br>İstanbul, Türkiye</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Telefon</h3>
+                        <p>+90 (212) 123 45 67</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>E-posta</h3>
+                        <p>info@sirketadi.com</p>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <h3>Çalışma Saatleri</h3>
+                        <p>Pazartesi - Cuma<br>09:00 - 18:00</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.279567015713!2d28.975735!3d41.012237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab974807d0575%3A0x44089783d1089f31!2sIstanbul%2C%20Turkey!5e0!3m2!1sen!2str!4v1234567890123" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Şirket</h3>
+                <ul>
+                    <li><a href="#">Hakkımızda</a></li>
+                    <li><a href="#">Ekibimiz</a></li>
+                    <li><a href="#">Kariyer</a></li>
+                    <li><a href="#">Basın</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hizmetler</h3>
+                <ul>
+                    <li><a href="#">Web Tasarım</a></li>
+                    <li><a href="#">Yazılım Geliştirme</a></li>
+                    <li><a href="#">Dijital Pazarlama</a></li>
+                    <li><a href="#">SEO</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Destek</h3>
+                <ul>
+                    <li><a href="#">Yardım Merkezi</a></li>
+                    <li><a href="#">İletişim</a></li>
+                    <li><a href="#">SSS</a></li>
+                    <li><a href="#">Gizlilik Politikası</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Sosyal Medya</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2024 Şirket Adı. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+</body>
+</html>
